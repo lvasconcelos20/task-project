@@ -23,13 +23,14 @@ export function onAuthChanged(callback: (user: User | null ) => void ){
 
 export const createUserWithEmailAndPasswordLocal = async (
     email: string,
-    password: string
+    password: string,
   ) => {
     try {
       const userCred = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
+ 
       );
      
       return {

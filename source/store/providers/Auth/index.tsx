@@ -79,7 +79,6 @@ const AuthProvider = ({ children }: Props) => {
     email,
     password,
     name,
-    username,
   }: SignUpFormValidationData) => {
     if (!email || !password) {
       errorToast("Email e senha inválidos");
@@ -103,13 +102,12 @@ const AuthProvider = ({ children }: Props) => {
         id: user.uid,
         email,
         name,
-        username,
         password,
       });
 
       setUserUid(user.uid);
 
-      toast("Conta criada! Enviamos um email de confirmação ao seu email", {
+      toast("Conta criada!", {
         type: "success",
       });
       router.push("/login");

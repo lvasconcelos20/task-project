@@ -52,7 +52,6 @@ export const createNewUserDoc = async ({
     id,
     email,
     name,
-    username, 
     password
 
   }: UserEntity) => {
@@ -60,7 +59,6 @@ export const createNewUserDoc = async ({
       await setDoc(doc(db, tableName, id || ""), {
         name,
         email,
-        username,
         password
       });
       return { error: null };

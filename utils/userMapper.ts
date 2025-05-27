@@ -8,7 +8,6 @@ export const userMapper = (apiData: any): UserEntity => {
     name: apiData.name,
     email: apiData.email,
     password: apiData.password,
-    username: apiData.username
 
   };
 };
