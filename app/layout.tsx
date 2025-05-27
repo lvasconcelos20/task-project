@@ -12,8 +12,8 @@ import UserProvider from "@/source/store/providers/User";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "EvoDeck",
-  description: "evodeck"
+  title: "TaskSphere",
+  description: "task-sphere"
 };
 
 export default function RootLayout({

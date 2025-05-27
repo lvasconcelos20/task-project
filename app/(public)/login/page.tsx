@@ -88,7 +88,7 @@ export default function LoginPage() {
 
           <div className="flex items-center mt-4 text-[#659AD6] text-sm">
             Não possui cadastro?
-            <Link href="/cadastro" className="ml-1 text-[#355070] underline">
+            <Link href="/register" className="ml-1 text-[#355070] underline">
               Cadastre-se
             </Link>
           </div>

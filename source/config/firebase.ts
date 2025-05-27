@@ -2,26 +2,19 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC4Ebv6XOengPgJ2W0-A5Oy2O2DgWGCP-U",
-  authDomain: "evo-deck.firebaseapp.com",
-  projectId: "evo-deck",
-  storageBucket: "evo-deck.firebasestorage.app",
-  messagingSenderId: "794173841232",
-  appId: "1:794173841232:web:7bfbd92b7d4afc10f4d655",
-  measurementId: "G-Q0PC224XC7"
+  apiKey: "AIzaSyCmZ8m35KrEvy1LexrjxXTxY9v1sxE-MNM",
+  authDomain: "tasksphere-auth.firebaseapp.com",
+  projectId: "tasksphere-auth",
+  storageBucket: "tasksphere-auth.firebasestorage.app",
+  messagingSenderId: "995700500824",
+  appId: "1:995700500824:web:53d2fadbb3b9f3ed995d2d"
 };
 
 const app = initializeApp(firebaseConfig);
 getFirestore(app)
 getAuth(app)
-
-if (typeof window !== "undefined") {
-  const analytics = getAnalytics(app);
-  console.log(analytics);
-}
 
 export default app;
 
