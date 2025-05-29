@@ -1,7 +1,7 @@
 "use client";
 
 import Navbar from "@/containers/NavBar/navBar";
-import AuthenticatedOnlyFeature from "@/components/templates/Authenticated/authenticated";
+import  AuthenticatedOnlyFeatureWrapper from "@/components/templates/Authenticated/authenticated";
 
 const authMenuItems = [
   {
@@ -12,11 +12,11 @@ const authMenuItems = [
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <AuthenticatedOnlyFeature>
+    < AuthenticatedOnlyFeatureWrapper>
     <main className="flex h-screen w-full flex-col items-center justify-center">
         <Navbar menuItems={authMenuItems}/>
         {children}
       </main>
-    </AuthenticatedOnlyFeature>
+    </ AuthenticatedOnlyFeatureWrapper>
   );
 }
