@@ -14,7 +14,7 @@ interface Props {
 
 function PublicOnlyFeature({ children }: Props): JSX.Element {
   const { userUid } = useAuth();
-  console.log(userUid)
+
   const router = useRouter();
 
   useEffect(() => {

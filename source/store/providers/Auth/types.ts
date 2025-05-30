@@ -16,7 +16,6 @@ export interface AuthContextType {
     email,
     password,
     name,
-    username
   }: SignUpFormValidationData) => Promise<void>;
   loading: Record<string, boolean>;
   loginWithInternalService: (email: string, password: string) => void;

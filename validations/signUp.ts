@@ -9,4 +9,6 @@ export default z
     name,
     email,
     password,
+    role: z.string({message: "Campo Obrigatório"})  
   })
+  

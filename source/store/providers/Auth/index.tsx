@@ -79,6 +79,7 @@ const AuthProvider = ({ children }: Props) => {
     email,
     password,
     name,
+    role
   }: SignUpFormValidationData) => {
     if (!email || !password) {
       errorToast("Email e senha inválidos");
@@ -102,10 +103,12 @@ const AuthProvider = ({ children }: Props) => {
         id: user.uid,
         email,
         name,
-        password,
+        role
       });
+      console.log("userNewDoc:", createNewUserDoc)
 
       setUserUid(user.uid);
+      console.log("usuario ccriado:", setUserUid)
 
       toast("Conta criada!", {
         type: "success",
@@ -124,12 +127,13 @@ const AuthProvider = ({ children }: Props) => {
   const waitForUserSync = async () => {
     setLoading((prev) => ({ ...prev, onAuthUserChanged: true }));
     await waitForUser(async (userCred) => {
-      if (userCred && !userCred?.emailVerified) {
-        logOut();
-        setLoading((prev) => ({ ...prev, onAuthUserChanged: false }));
-      }
-    });
-    setLoading((prev) => ({ ...prev, onAuthUserChanged: false }));
+      if (userCred) {
+            setUserUid(userCred.uid);
+          } else {
+            setUserUid("");
+          }
+          setLoading((prev) => ({ ...prev, onAuthUserChanged: false }));
+      });
   };
 
   const logoutUser = async () => {
@@ -156,5 +160,5 @@ const AuthProvider = ({ children }: Props) => {
     </AuthContext.Provider>
   );
 };
-
+  
 export default AuthProvider;

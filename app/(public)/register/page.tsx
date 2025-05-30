@@ -7,15 +7,18 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import SignUpFormSchema from "@/validations/signUp";
 import useAuth from "@/source/hooks/useAuth";
+import SelectField from "@/components/molecules/SelectField/selectField";
+
 
 type SignUpForm = z.infer<typeof SignUpFormSchema>;
 
-export default function CadastroPage() {
+export default function RegisterPage() {
   const { createUserWithInternalService, loading } = useAuth();
 
   const {
     handleSubmit,
     register,
+    control,
     formState: { errors },
   } = useForm<SignUpForm>({
     mode: "all",
@@ -25,6 +28,7 @@ export default function CadastroPage() {
 
   const handleSubmitForm = (data: SignUpForm) => {
     createUserWithInternalService(data);
+    console.log("usuario info: ", createUserWithInternalService)
   };
 
   return (
@@ -58,6 +62,17 @@ export default function CadastroPage() {
             label="Senha"
             type="password"
             formErrors={errors}
+          />
+          <SelectField
+          name="role"
+          control={control}
+          label="Função"
+          options={[
+            {value: "admin", label: "Administrador"},
+            {value: "manager", label: "Gerente de Projetos"},
+            {value: "user", label: "Colaborador"}
+          ]}
+          formErrors={errors}
           />
 
           </div>

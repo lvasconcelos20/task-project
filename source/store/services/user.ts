@@ -52,15 +52,16 @@ export const createNewUserDoc = async ({
     id,
     email,
     name,
-    password
+    role
 
-  }: UserEntity) => {
+  }: Omit<UserEntity, "password" >) => {
     try {
       await setDoc(doc(db, tableName, id || ""), {
         name,
         email,
-        password
+        role
       });
+      console.log("criado:", setDoc)
       return { error: null };
     } catch (error: any) {
       return { error: error.message };

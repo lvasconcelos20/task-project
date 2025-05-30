@@ -13,6 +13,7 @@ interface Props {
 
 function AuthenticatedOnlyFeature({ children }: Props): JSX.Element {
   const { userUid} = useAuth()
+  console.log("id do user:", userUid)
   const router = useRouter()
 
   useEffect(() => {
