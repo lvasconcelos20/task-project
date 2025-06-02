@@ -68,7 +68,6 @@ export default function RegisterPage() {
           control={control}
           label="Função"
           options={[
-            {value: "admin", label: "Administrador"},
             {value: "manager", label: "Gerente de Projetos"},
             {value: "user", label: "Colaborador"}
           ]}
