@@ -58,7 +58,7 @@ export default function Navbar({ menuItems}: NavbarProps) {
   
 
   return (
-    <nav className=" fixed top-0 z-50 flex h-20 w-full items-center justify-between   bg-[#4A709C]">
+    <nav className=" fixed top-0 z-50 flex h-20 w-full items-center justify-between   bg-black">
      
       <div className="hidden lg:block">
        
