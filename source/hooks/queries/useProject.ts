@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createProjectById, fetchUserProjects } from "@/source/store/services/project";
+import { createProjectById, fetchUserProjects, updateProject } from "@/source/store/services/project";
 import { ProjectEntity } from "@/common/entities/projects";
 import { useQuery } from "@tanstack/react-query";
 import { DocumentData } from "firebase/firestore";
@@ -50,3 +50,30 @@ export const useCreateProject = () => {
 
   return { create, loading, error };
 };
+
+export function useUpdateProject() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const update = async (
+    projectId: string,
+    data: Parameters<typeof updateProject>[1],
+    userId: string
+  ) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await updateProject(projectId, data, userId);
+    } catch (err: any) {
+      setError(err.message || "Erro ao atualizar o projeto");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    update,
+    loading,
+    error,
+  };
+}
