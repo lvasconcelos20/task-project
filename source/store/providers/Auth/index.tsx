@@ -105,10 +105,9 @@ const AuthProvider = ({ children }: Props) => {
         name,
         role
       });
-      console.log("userNewDoc:", createNewUserDoc)
+
 
       setUserUid(user.uid);
-      console.log("usuario ccriado:", setUserUid)
 
       toast("Conta criada!", {
         type: "success",

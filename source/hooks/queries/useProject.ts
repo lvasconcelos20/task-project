@@ -2,20 +2,28 @@ import { useState } from "react";
 import { createProjectById, fetchUserProjects } from "@/source/store/services/project";
 import { ProjectEntity } from "@/common/entities/projects";
 import { useQuery } from "@tanstack/react-query";
+import { DocumentData } from "firebase/firestore";
 
 
 
-export function getAllProjectsByIdQueryKey() {
-    return["project"]
+export function getAllProjectsByIdQueryKey(id: string) {
+    return["project", id]
 }
-export function getAllProjectsByIdQueryFn(id:string) {
-    return () => fetchUserProjects(id)
+export function getAllProjectsByIdQueryFn(id: string) {
+  return async (): Promise<ProjectEntity[]> => {
+    return await fetchUserProjects(id); 
+  };
 }
 
-export const useProjectAllById = (id: string) => {
+export const useProjectAllById = <T = ProjectEntity[]>(
+    id: string,
+    select?: (data: ProjectEntity[]) => T
+) => {
+
   return useQuery({
-    queryKey: getAllProjectsByIdQueryKey(),
+    queryKey: getAllProjectsByIdQueryKey(id),
     queryFn: getAllProjectsByIdQueryFn(id),
+    select,
     enabled: !!id,
   })
 }
@@ -37,7 +45,8 @@ export const useCreateProject = () => {
     } finally {
       setLoading(false);
     }
-  };
+   
+  }
 
   return { create, loading, error };
 };

@@ -28,7 +28,6 @@ export default function RegisterPage() {
 
   const handleSubmitForm = (data: SignUpForm) => {
     createUserWithInternalService(data);
-    console.log("usuario info: ", createUserWithInternalService)
   };
 
   return (
