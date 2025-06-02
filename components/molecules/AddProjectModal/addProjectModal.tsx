@@ -13,16 +13,19 @@ import { AddProjectModalProps } from "./types"
 import InputField from "../InputField/inputField"
 import Button from "@/components/atoms/Button/button"
 import { useCreateProject } from "@/source/hooks/queries/useProject";
-import { Timestamp } from "firebase/firestore";
 import { ProjectEntity } from "@/common/entities/projects";
 import { DatePicker } from "../DatePicker/datePicker";
 import { useSuggestedCollaborators } from "@/source/hooks/queries/useCollaborators";
 import { useState } from "react";
+import { Timestamp } from "firebase/firestore";
+
+
 
 type ProjectForm = z.infer<typeof ProjectValidationSchema>;
 
 export function AddProjectModal({ isOpen, setIsOpen, userId }: AddProjectModalProps) {
-  const { create, loading } = useCreateProject()
+  const { create, loading} = useCreateProject()
+  
   const { collaborators: suggestedCollaborators, loading: loadingSuggestions } = useSuggestedCollaborators(10)
   const [selectedEmails, setSelectedEmails] = useState<string[]>([])
 
