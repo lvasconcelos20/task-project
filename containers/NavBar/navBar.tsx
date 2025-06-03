@@ -56,7 +56,7 @@ export default function Navbar({ menuItems }: NavbarProps) {
 
   return (
     <nav className="fixed top-0 z-50 flex h-20 w-full items-center justify-between bg-black px-6">
-      {/* Esquerda (menu hamburguer para mobile) */}
+   
       {!isMenuOpen && (
         <button
           onClick={() => setIsMenuOpen((prevState) => !prevState)}
@@ -66,10 +66,9 @@ export default function Navbar({ menuItems }: NavbarProps) {
         </button>
       )}
 
-      {/* Centro vazio para ocupar o espaço restante */}
       <div className="flex-1" />
 
-      {/* Direita (ícone de logout) */}
+
       <div className="hidden lg:flex">
         <Button
           onClick={logoutUser}
@@ -80,7 +79,7 @@ export default function Navbar({ menuItems }: NavbarProps) {
         </Button>
       </div>
 
-      {/* Menu responsivo (mobile) */}
+
       {isMenuOpen && (
         <ResponsiveMenu
           onCloseMenu={() => setIsMenuOpen(false)}

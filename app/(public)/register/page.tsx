@@ -32,7 +32,10 @@ export default function RegisterPage() {
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
+ 
       <div className="flex flex-col items-center w-full max-w-sm gap-4">
+             <h1 className="w-full text-center text-2xl font-bold tracking-widest text-black mb-4">
+  TASKSHERE - Cadastro</h1>
         <form
           onSubmit={handleSubmit(handleSubmitForm)}
           className="w-full flex flex-col items-center gap-4"
@@ -77,15 +80,15 @@ export default function RegisterPage() {
         
           <Button
             loading={loading?.createUserWithInternalService}
-            className="w-full h-10 text-lg bg-gradient-to-b text-white from-[#B1D5FF] via-[#4A709C] to-[#004FAA]"
+            className="w-full h-10 text-lg bg-gradient-to-b text-white bg-black"
           >
             Entrar
           </Button>
         </form>
 
-        <div className="text-sm text-[#659AD6] mt-2">
+        <div className="text-sm text-gray-600 mt-2">
           Já possui uma conta?
-          <Link href="/login" className="ml-1 text-[#355070] underline">
+          <Link href="/login" className="ml-1 text-black underline">
             Fazer Login
           </Link>
         </div>
