@@ -15,7 +15,6 @@ export function useSuggestedCollaborators(count = 5) {
         const formatted = data.results.map((user: any) => ({
           name: `${user.name.first} ${user.name.last}`,
           email: user.email,
-          picture: user.picture.thumbnail,
         }))
 
         setCollaborators(formatted)

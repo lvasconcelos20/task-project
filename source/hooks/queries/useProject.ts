@@ -1,32 +1,20 @@
 import { useState } from "react";
-import { createProjectById, fetchUserProjects, updateProject } from "@/source/store/services/project";
+import { createProjectById, deleteProject, getAllProjectsByIdQuery, updateProject } from "@/source/store/services/project";
 import { ProjectEntity } from "@/common/entities/projects";
 import { useQuery } from "@tanstack/react-query";
 import { DocumentData } from "firebase/firestore";
 
 
 
-export function getAllProjectsByIdQueryKey(id: string) {
-    return["project", id]
-}
-export function getAllProjectsByIdQueryFn(id: string) {
-  return async (): Promise<ProjectEntity[]> => {
-    return await fetchUserProjects(id); 
-  };
-}
-
-export const useProjectAllById = <T = ProjectEntity[]>(
-    id: string,
-    select?: (data: ProjectEntity[]) => T
-) => {
-
-  return useQuery({
-    queryKey: getAllProjectsByIdQueryKey(id),
-    queryFn: getAllProjectsByIdQueryFn(id),
-    select,
-    enabled: !!id,
-  })
-}
+export const useProjectsByUser = (userUid: string, userEmail: string) => {
+  return useQuery<ProjectEntity[]>({
+    queryKey: ["projects", userUid, userEmail],
+    queryFn: getAllProjectsByIdQuery(userUid, userEmail),
+    enabled: !!userUid && !!userEmail,
+    staleTime: 1000 * 60, // 1 minuto
+    refetchOnWindowFocus: false,
+  });
+};
 
 export const useCreateProject = () => {
   const [loading, setLoading] = useState(false);
@@ -73,6 +61,30 @@ export function useUpdateProject() {
 
   return {
     update,
+    loading,
+    error,
+  };
+}
+
+
+export function useDeleteProject() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const remove = async (projectId: string, userId: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await deleteProject(projectId, userId);
+    } catch (err: any) {
+      setError(err.message || "Erro ao excluir o projeto");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    remove,
     loading,
     error,
   };
