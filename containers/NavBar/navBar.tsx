@@ -50,31 +50,37 @@ function ResponsiveMenu({ menuItems, onCloseMenu }: ResponsiveMenuProps) {
     </div>
   );
 }
-
-export default function Navbar({ menuItems}: NavbarProps) {
-
+export default function Navbar({ menuItems }: NavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { logoutUser, loading } = useAuth();
-  
 
   return (
-    <nav className=" fixed top-0 z-50 flex h-20 w-full items-center justify-between   bg-black">
-     
-      <div className="hidden lg:block">
-       
-        <Button onClick={logoutUser} loading={loading.logout} className="border-none bg-transparent" >
-        <IoIosLogOut  size={24} className="text-white "/>
-        </Button>
-      </div>
-     
+    <nav className="fixed top-0 z-50 flex h-20 w-full items-center justify-between bg-black px-6">
+      {/* Esquerda (menu hamburguer para mobile) */}
       {!isMenuOpen && (
         <button
           onClick={() => setIsMenuOpen((prevState) => !prevState)}
-          className="block cursor-pointer lg:hidden"
+          className="block lg:hidden"
         >
           <FiMenu size={32} color="#fff" />
         </button>
       )}
+
+      {/* Centro vazio para ocupar o espaço restante */}
+      <div className="flex-1" />
+
+      {/* Direita (ícone de logout) */}
+      <div className="hidden lg:flex">
+        <Button
+          onClick={logoutUser}
+          loading={loading.logout}
+          className="border-none bg-transparent"
+        >
+          <IoIosLogOut size={24} className="text-white" />
+        </Button>
+      </div>
+
+      {/* Menu responsivo (mobile) */}
       {isMenuOpen && (
         <ResponsiveMenu
           onCloseMenu={() => setIsMenuOpen(false)}
