@@ -37,12 +37,12 @@ export default function ProjectDetail() {
   }));
 
   return (
-    <div className="w-full p-10 md:p-10 space-y-8">
+    <div className="w-full  h-screen p-10 md:p-10 space-y-8">
 
-      {/* Botão sempre visível */}
+
       <Button
         variant="ghost"
-        className="flex items-center gap-2"
+        className="flex items-center pt-20"
         onClick={() => router.back()}
       >
         <ArrowLeft className="w-4 h-4" />
@@ -128,16 +128,6 @@ export default function ProjectDetail() {
             />
           </div>
 
-          {isOwner && (
-            <div className="flex flex-wrap gap-4 pt-4">
-              <Button variant="outline" onClick={() => {}}>
-                Editar Projeto
-              </Button>
-              <Button variant="destructive" onClick={() => {}}>
-                Excluir Projeto
-              </Button>
-            </div>
-          )}
         </>
       )}
 

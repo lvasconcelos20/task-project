@@ -34,7 +34,10 @@ export default function LoginPage() {
           onSubmit={handleSubmit(handleSubmitForm)}
           className="w-full flex flex-col items-center gap-4"
         >
-          <div className="w-full flex flex-col">
+          <div className="w-full flex flex-col justify-center gap-6">
+          <h1 className="w-full text-center text-3xl font-bold tracking-widest text-black mb-4">
+  TASKSHERE - LOGIN
+</h1>
           <InputField
             register={register}
             name="email"
@@ -56,15 +59,15 @@ export default function LoginPage() {
         
           <Button
             loading={loading?.createUserWithInternalService}
-            className="w-full h-10 text-lg bg-gradient-to-b text-white from-[#B1D5FF] via-[#4A709C] to-[#004FAA]"
+            className="w-full h-10 text-lg bg-gradient-to-b text-white from-[#B1D5FF] bg-black"
           >
             Entrar
           </Button>
         </form>
 
-        <div className="text-sm text-[#659AD6] mt-2">
+        <div className="text-sm text-gray-600 mt-2">
           Não possui conta?
-          <Link href="/register" className="ml-1 text-[#355070] underline">
+          <Link href="/register" className="ml-1 text-black underline">
             Cadastre-se
           </Link>
         </div>
