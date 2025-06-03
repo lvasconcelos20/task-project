@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { AddProjectModal } from "@/components/molecules/AddProjectModal/addProjectModal";
 import { UpdateProjectModal } from "@/components/molecules/UpdateProjectModal/updateProjectModal";
-
+import { useRouter } from "next/navigation";
 import { useProjectsByUser, useDeleteProject } from "@/source/hooks/queries/useProject";
 import useAuth from "@/source/hooks/useAuth";
 import { usePermissions } from "@/source/hooks/queries/usePermissions";
@@ -21,15 +21,13 @@ import { usePermissions } from "@/source/hooks/queries/usePermissions";
 import { ProjectEntity } from "@/common/entities/projects";
 
 export default function Home() {
+  const router = useRouter();
   const { userUid, userEmail  } = useAuth();
   const { data: projects = [], isLoading } = useProjectsByUser(userUid, userEmail);
   const { remove, loading: deletingProject } = useDeleteProject();
-console.log("userUid:", userUid);
-console.log("userEmail:", userEmail);
   const [openAddProjectModal, setIsOpenAddProjectModal] = useState(false);
   const [openEditProjectModal, setIsOpenEditProjectModal] = useState(false);
   const [projectToEdit, setProjectToEdit] = useState<ProjectEntity>();
-
 
   const { canManageProject } = usePermissions();
 
@@ -90,6 +88,9 @@ console.log("userEmail:", userEmail);
                     {deletingProject ? "Excluindo..." : "Excluir"}
                   </DropdownMenuItem>
                 )}
+                <DropdownMenuItem onClick={() =>router.push(`/home/${row.id}`)}>
+                    Ver Detalhes 
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           );

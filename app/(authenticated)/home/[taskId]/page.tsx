@@ -1,0 +1,148 @@
+"use client";
+
+import { useParams, useRouter } from "next/navigation";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import useAuth from "@/source/hooks/useAuth";
+import { usePermissions } from "@/source/hooks/queries/usePermissions";
+import { DataTable } from "@/components/molecules/DataTable/DataTable";
+import { useProjectsByUser } from "@/source/hooks/queries/useProject";
+import { useTasksByProject } from "@/source/hooks/queries/useTasks";
+import { ArrowLeft } from "lucide-react";
+
+export default function ProjectDetail() {
+  const router = useRouter();
+  const { taskId } = useParams();
+  const { userUid, userEmail } = useAuth();
+
+  const { data: projects = [], isLoading: projectLoading } = useProjectsByUser(userUid, userEmail);
+  const project = projects.find((p) => p.id === taskId);
+
+  const { data: tasks = [], isLoading: tasksLoading } = useTasksByProject(taskId as string); 
+  const { canManageProject } = usePermissions();
+
+  if (projectLoading) return <div>Carregando projeto...</div>;
+  if (!project) return <div>Projeto não encontrado.</div>;
+
+  const isOwner = canManageProject(project);
+
+  const formattedTasks = tasks.map((task) => ({
+    ...task,
+    image_url: (
+      <img
+        src={task.image_url}
+        alt="Imagem"
+        className="w-12 h-12 object-cover rounded"
+      />
+    ),
+  }));
+
+  return (
+    <div className="w-full p-6 md:p-10 space-y-8">
+
+      {/* Botão de Voltar */}
+      <Button
+        variant="ghost"
+        className="flex items-center gap-2"
+        onClick={() => router.back()}
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Voltar
+      </Button>
+
+      <div className="space-y-1">
+        <h1 className="text-4xl font-extrabold">{project.name}</h1>
+        <p className="text-muted-foreground">{project.description}</p>
+      </div>
+
+      <div className="grid md:grid-cols-3 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm text-muted-foreground">Data de Início</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-lg font-medium">{formatDate(project.start_date)}</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm text-muted-foreground">Data de Fim</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-lg font-medium">{formatDate(project.end_date)}</p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm text-muted-foreground">Colaboradores</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-1 text-sm">
+              {(project.collaborators || []).map((email: string) => (
+                <li key={email} className="text-muted-foreground">
+                  • {email}
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="space-y-4">
+        <DataTable
+          title="Tarefas"
+          createButtonText="Nova Tarefa"
+          onCreateClick={() => {}}
+          loading={tasksLoading}
+          columns={[
+            { key: "name", title: "Nome" },
+            { key: "description", title: "Descrição" },
+            { key: "image_url", title: "Imagem" },
+          ]}
+          data={formattedTasks}
+          pageSize={5}
+          actions={(row) => {
+            const canEditTask = isOwner || row.creator_id === userUid;
+
+            return (
+              <>
+                {canEditTask && (
+                  <Button variant="ghost" size="sm">
+                    Editar
+                  </Button>
+                )}
+                {canEditTask && (
+                  <Button variant="ghost" size="sm">
+                    Excluir
+                  </Button>
+                )}
+              </>
+            );
+          }}
+        />
+      </div>
+
+      {isOwner && (
+        <div className="flex flex-wrap gap-4 pt-4">
+          <Button variant="outline" onClick={() => {}}>
+            Editar Projeto
+          </Button>
+          <Button variant="destructive" onClick={() => {}}>
+            Excluir Projeto
+          </Button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function formatDate(dateValue: any) {
+  if (!dateValue) return "-";
+  if (typeof dateValue.toDate === "function") {
+    return dateValue.toDate().toLocaleDateString("pt-BR");
+  }
+  const date = new Date(dateValue);
+  return isNaN(date.getTime()) ? "-" : date.toLocaleDateString("pt-BR");
+}
