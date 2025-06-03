@@ -14,7 +14,7 @@ Aplicação web desenvolvida com **Next.js**, **TypeScript** e **Firebase** para
 ✅ Regras de permissão: somente criadores podem editar ou excluir projetos  
 ✅ Formulários com **validação robusta** utilizando **React Hook Form** e **Zod**  
 ✅ Sugestão de colaboradores utilizando API externa (`randomuser.me`)  
-✅ Layout responsivo com **TailwindCSS**  
+✅ Layout responsivo com **TailwindCSS**  e **Atomic Design**
 ✅ Gerenciamento de tarefas: criação e listagem  
 ✅ Estrutura organizada por componentes, hooks e serviços
 
